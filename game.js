@@ -2,9 +2,9 @@
  * Copyright (c) 2019.
  * Developed by Adam Hodgkinson
  * Last modified 20/08/2019, 22:07
- ******************************************************************************//
+ ******************************************************************************/
 
-var debug = false;
+var debug = true;
 
 var offScreenCanvas;
 var offScreenContext;
@@ -47,11 +47,14 @@ class Game {
     }
 
     update(d) {
+        //let pUT1 = Date.now(); // pUT = Player Update Time
         this.player.update(d)
+        //let pUT2 = Date.now();
+        //console.log("Player Update took " + (pUT2 - pUT1));
 
         if (this.attemptInProgress) {
-            this.timeElapsed = (Math.floor((Date.now() - this.startTime) / 1000))
-            document.getElementById("time-display").innerText = "Time Elapsed: " + this.timeElapsed
+            this.timeElapsed = (Math.floor((Date.now() - this.startTime) / 1000));
+            document.getElementById("time-display").innerText = "Time Elapsed: " + this.timeElapsed;
 
             if (this.timeElapsed > this.timeLimit) {
                 this.fail();
@@ -266,6 +269,7 @@ class Player {
     }
 
     update(d) {
+        if (GAME.attemptFailed) return;
         if (this.upPressed) this.up();
         //if (this.downPressed) this.down();
         if (this.leftPressed) this.left();
@@ -276,7 +280,7 @@ class Player {
         this.x += this.xv * d;
         this.y += this.yv * d;
 
-        if (GAME.attemptFailed) return;
+
         this.checkOnGround();
 
 
@@ -302,9 +306,11 @@ class Player {
             if (this.x - 1 + this.width / 2 > item.x && this.x - this.width / 2 < item.x + item.width && this.y - 1 + this.height / 2 > item.y && this.y - this.width / 2 < item.y + item.height) {
                 if (item.winbox) {
                     this.reachEnd()
+                    break;
                 }
                 if (item.deadly) {
                     GAME.fail()
+                    break;
                 }
                 console.log("Attempting to resolve collision")
                 this.resolveCollision(item);
@@ -312,6 +318,7 @@ class Player {
             } else if (intersects(item.x, item.y, item.x + item.width, item.y + item.height, this.x, this.y, this.currentPath[this.currentPath.keys[this.currentPath.keys.length - 1]].x, this.currentPath[this.currentPath.keys[this.currentPath.keys.length - 1]].y)) { // if the vector collides with the shape
                 if (item.deadly) {
                     GAME.fail();
+                    break;
                 }
                 this.resolveCollision(item);
                 return;
@@ -412,7 +419,7 @@ window.onload = function () {
     globalDraw();
 };
 
-var fps = 50;
+var fps = 100;
 var now;
 var then = Date.now();
 var interval = 1000 / fps;
@@ -429,6 +436,8 @@ function globalDraw() {
     now = Date.now();
     delta = now - then;
     if (delta > interval) {
+        // let pUT1 = Date.now(); // pUT = Player Update Time
+
         // update time stuffs
 
         // Just `then = now` is not enough.
@@ -452,11 +461,14 @@ function globalDraw() {
         //pastDelta.shift();
         //pastDelta.push(delta);
         timeSinceFpsUpdate += delta;
-        if (timeSinceFpsUpdate > 200) {
+        if (timeSinceFpsUpdate > 2000) {
             document.getElementById("fps-counter").innerText = "FPS: " + Math.floor(1000 / delta)
             timeSinceFpsUpdate = 0;
         }
         GAME.update(calc);
+        // let pUT2 = Date.now();
+        // console.log("1:  " + pUT1);
+        // console.log("2:  " + pUT2);
     }
 }
 
