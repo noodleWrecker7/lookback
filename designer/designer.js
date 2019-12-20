@@ -60,6 +60,7 @@ class App {
         let pos = getMousePos(APP.cvs, e)
         if (APP.mode == "draw" && APP.drawFirstPos) {
             let fp = APP.drawFirstPos;
+            APP.ctx.clear();
             APP.ctx.fillStyle = "black";
             APP.ctx.fillRect(fp.x, fp.y, pos.x - fp.x, pos.y - fp.y);
         } else {
