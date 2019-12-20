@@ -34,7 +34,11 @@ class App {
     }
 
     update() {
-
+        for (let i = 0; i < this.level.blocks.length; i++) {
+            this.ctx.fillStyle = "black";
+            let b = this.level.blocks[i];
+            this.ctx.fillRect(b.x, b.y, b.width, b.height);
+        }
     }
 
     handleMouseDown(e) {
@@ -74,8 +78,13 @@ class Level {
     constructor(w, h) {
         this.width = w || 900; // default
         this.height = h || 600; //
+        this.blocks = [];
+
     }
 
+    add(x, y, w, h) {
+        this.blocks.push({x: x, y: y, width: w, height: h});
+    }
 }
 
 function getMousePos(canvas, evt) {
