@@ -54,7 +54,7 @@ class App {
         let pos = getMousePos(APP.cvs, e)
         if (APP.mode == "draw" && APP.drawFirstPos) {
             APP.drawSecondPos = pos;
-            //APP.level.add
+            APP.level.add(APP.drawFirstPos.x, APP.drawFirstPos.y, pos.x - APP.drawFirstPos.x, pos.y - APP.drawFirstPos.y);
             console.log("BLOCK ADDED")
             APP.drawFirstPos = null;
         }
