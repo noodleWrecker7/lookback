@@ -31,7 +31,7 @@ class Game {
 
     preload() {
         this.level = parseInt(new URLSearchParams(window.location.search).get("level"));
-        if (!this.level) window.location.search = "level=1";
+        if (!this.level) window.location.search = "level=1"; // if no level found, default to level 1
         this.levelUrl = "map" + this.level;
         this.cvs = document.getElementById("gameCanvas");
         this.ctx = this.cvs.getContext("2d");
