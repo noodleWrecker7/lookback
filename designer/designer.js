@@ -48,7 +48,7 @@ class App {
 
     handleMouseUp(e) {
         let pos = getMousePos(APP.cvs, e)
-        if (APP.mode == "draw") {
+        if (APP.mode == "draw" && APP.drawFirstPos) {
             APP.drawSecondPos = pos;
             //APP.level.add
             console.log("BLOCK ADDED")
