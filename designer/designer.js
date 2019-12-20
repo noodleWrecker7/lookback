@@ -11,6 +11,11 @@
  *     Photonstorm's phaser.js
  */
 
+//TODO switch modes
+//TODO delete blocks
+//TODO view coords
+//TODO export levels to json/make playable
+
 var APP;
 
 class App {
