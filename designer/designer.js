@@ -17,8 +17,8 @@ class App {
 
     constructor() {
         this.level = new Level();
-        this.preload()
-        this.create()
+        this.preload();
+        this.create();
         this.mode = "draw";
     }
 
@@ -43,9 +43,9 @@ class App {
 
     handleMouseDown(e) {
         let pos = getMousePos(APP.cvs, e)
-        console.log("out here")
+        console.log("out here");
         if (APP.mode == "draw") {
-            console.log("here")
+            console.log("here");
             APP.drawFirstPos = pos;
         }
     }
@@ -61,10 +61,11 @@ class App {
     }
 
     handleMouseMove(e) {
-        let pos = getMousePos(APP.cvs, e)
+        let pos = getMousePos(APP.cvs, e);
         if (APP.mode == "draw" && APP.drawFirstPos) {
             let fp = APP.drawFirstPos;
             APP.ctx.clearRect(0, 0, APP.cvs.width, APP.cvs.height);
+            APP.update();
             APP.ctx.fillStyle = "black";
             APP.ctx.fillRect(fp.x, fp.y, pos.x - fp.x, pos.y - fp.y);
         } else {
