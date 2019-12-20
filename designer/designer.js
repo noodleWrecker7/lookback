@@ -29,7 +29,7 @@ class App {
 
     create() {
         document.addEventListener("mousedown", this.handleMouseDown);
-        document.addEventListener("mousedown", this.handleMouseUp);
+        document.addEventListener("mouseup", this.handleMouseUp);
         document.addEventListener("mousemove", this.handleMouseMove);
     }
 
