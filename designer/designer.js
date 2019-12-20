@@ -19,6 +19,7 @@ class App {
         this.level = new Level();
         this.preload()
         this.create()
+        this.mode = "draw";
     }
 
     preload() {
@@ -29,6 +30,7 @@ class App {
     create() {
         document.addEventListener("onmousedown", this.handleMouseDown);
         document.addEventListener("onmousedown", this.handleMouseUp);
+        document.addEventListener("mousemove", this.handleMouseMove);
     }
 
     update() {
@@ -36,11 +38,30 @@ class App {
     }
 
     handleMouseDown(e) {
-        let pos = getMousePos(APP.cvs)
+        let pos = getMousePos(APP.cvs, e)
+        console.log("out here")
+        if (APP.mode == "draw") {
+            console.log("here")
+            APP.drawFirstPos = pos;
+        }
     }
 
     handleMouseUp(e) {
+        let pos = getMousePos(APP.cvs, e)
+        if (APP.mode == "draw") {
+            APP.drawSecondPos = pos;
+        }
+    }
 
+    handleMouseMove(e) {
+        let pos = getMousePos(APP.cvs, e)
+        if (APP.mode == "draw" && APP.drawFirstPos) {
+            let fp = APP.drawFirstPos;
+            APP.ctx.fillStyle = "black";
+            APP.ctx.fillRect(fp.x, fp.y, pos.x - fp.x, fp.y - pos.y);
+        } else {
+            APP.drawFirstPos = null;
+        }
     }
 }
 
