@@ -50,6 +50,9 @@ class App {
         let pos = getMousePos(APP.cvs, e)
         if (APP.mode == "draw") {
             APP.drawSecondPos = pos;
+            //APP.level.add
+            console.log("BLOCK ADDED")
+            APP.drawFirstPos = null;
         }
     }
 
@@ -58,7 +61,7 @@ class App {
         if (APP.mode == "draw" && APP.drawFirstPos) {
             let fp = APP.drawFirstPos;
             APP.ctx.fillStyle = "black";
-            APP.ctx.fillRect(fp.x, fp.y, pos.x - fp.x, fp.y - pos.y);
+            APP.ctx.fillRect(fp.x, fp.y, pos.x - fp.x, pos.y - fp.y);
         } else {
             APP.drawFirstPos = null;
         }
