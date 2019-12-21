@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2019.
  * Developed by Adam Hodgkinson
- * Last modified 21/12/12 10:2
+ * Last modified 21/12/12 16:12
  *
  * Everything on this page, and other pages on the website, is subject to the copyright of Adam Hodgkinson, it may be freely used, copied, distributed and/or modified, however, full credit must be given
  * to me and any derived works should be released under the same license. I am not held liable for any claim, this software is provided as-is and without any warranty.
@@ -11,7 +11,7 @@
  *     Photonstorm's phaser.js
  */
 
-var debug = false;
+var debug = true;
 
 var offScreenCanvas;
 var offScreenContext;
@@ -92,6 +92,7 @@ class Game {
         this.attemptInProgress = false;
         this.attemptFailed = false;
         this.startTime = 0;
+        this.player.upPressed = this.player.downPressed = this.player.rightPressed = this.player.leftPressed = false; // otherwise they keep moving
     }
 
     render() { // draws offScreen to main screen
@@ -180,7 +181,7 @@ class Map {
     constructor(url, w, h) {
         this.data = [];
         this.winbox = {};
-        let prom = this.loadMap(url)
+        let prom = this.loadMap(url + "?ModPagespeed=standby");
         prom.then(value => {
             this.data = value;
             this.drawMap(this.data);
@@ -342,6 +343,7 @@ class Player {
         if (!this.jumpAvailable && this.collisionJumpAvailable) {
             this.jumpAvailable = true;
             this.collisionJumpAvailable = false;
+
         }
 
         let pastCoord = this.currentPath[this.currentPath.keys[this.currentPath.keys.length - 1]];
@@ -357,7 +359,15 @@ class Player {
                 this.x = newX;
                 //this.xv = 0
                 this.y = newY;
-                this.yv = 0;
+                if (this.yv > 0) {
+                    this.yv = 0;
+                } else {
+                    this.y += this.yv * calc;
+                }
+                console.log(vector.y);
+                if (vector.y == 0 & !this.onGround) {
+                    this.y += 0.2;
+                }
                 this.onGround = true;
                 break;
             }

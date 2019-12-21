@@ -38,7 +38,14 @@
   {
     "x": 0,
     "y": 500,
-    "width": 200,
+    "width": 90,
+    "height": 100,
+    "colour": "black"
+  },
+  {
+    "x": 110,
+    "y": 500,
+    "width": 90,
     "height": 100,
     "colour": "black"
   },
