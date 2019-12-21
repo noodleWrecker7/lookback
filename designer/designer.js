@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2019.
  * Developed by Adam Hodgkinson
- * Last modified 20/12/12 22:10
+ * Last modified 21/12/12 9:47
  *
  * Everything on this page, and other pages on the website, is subject to the copyright of Adam Hodgkinson, it may be freely used, copied, distributed and/or modified, however, full credit must be given
  * to me and any derived works should be released under the same license. I am not held liable for any claim, this software is provided as-is and without any warranty.
@@ -93,6 +93,16 @@ class Level {
     }
 }
 
+function swapMode(){
+    if (APP.mode == "draw") {
+        APP.mode = "select";
+        document.getElementById("mode-selected").innerText = "Select Mode"
+    } else {
+        APP.mode = "draw";
+        document.getElementById("mode-selected").innerText = "Draw Mode"
+    }
+}
+
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {
@@ -103,4 +113,5 @@ function getMousePos(canvas, evt) {
 
 window.onload = function () {
     APP = new App();
+    
 };
