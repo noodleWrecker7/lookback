@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2019.
  * Developed by Adam Hodgkinson
- * Last modified 21/12/12 9:47
+ * Last modified 21/12/12 9:52
  *
  * Everything on this page, and other pages on the website, is subject to the copyright of Adam Hodgkinson, it may be freely used, copied, distributed and/or modified, however, full credit must be given
  * to me and any derived works should be released under the same license. I am not held liable for any claim, this software is provided as-is and without any warranty.
@@ -40,10 +40,17 @@ class App {
 
     update() {
         for (let i = 0; i < this.level.blocks.length; i++) {
-            this.ctx.fillStyle = "black";
             let b = this.level.blocks[i];
-            this.ctx.fillRect(b.x, b.y, b.width, b.height);
+            this.drawBlock(b.x, b.y, b.width, b.height);
         }
+    }
+
+    drawBlock(x, y, w, h) {
+        this.ctx.fillStyle = "black";
+        this.ctx.fillRect(x, y, w, h);
+        this.ctx.fillStyle = "blue";
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeRect(x, y, w, h)
     }
 
     handleMouseDown(e) {
@@ -93,7 +100,7 @@ class Level {
     }
 }
 
-function swapMode(){
+function swapMode() {
     if (APP.mode == "draw") {
         APP.mode = "select";
         document.getElementById("mode-selected").innerText = "Select Mode"
@@ -113,5 +120,5 @@ function getMousePos(canvas, evt) {
 
 window.onload = function () {
     APP = new App();
-    
+
 };
