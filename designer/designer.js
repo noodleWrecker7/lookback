@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2019.
  * Developed by Adam Hodgkinson
- * Last modified 21/12/12 9:52
+ * Last modified 21/12/12 9:53
  *
  * Everything on this page, and other pages on the website, is subject to the copyright of Adam Hodgkinson, it may be freely used, copied, distributed and/or modified, however, full credit must be given
  * to me and any derived works should be released under the same license. I am not held liable for any claim, this software is provided as-is and without any warranty.
@@ -48,8 +48,8 @@ class App {
     drawBlock(x, y, w, h) {
         this.ctx.fillStyle = "black";
         this.ctx.fillRect(x, y, w, h);
-        this.ctx.fillStyle = "blue";
-        this.ctx.lineWidth = 1;
+        this.ctx.strokeStyle = "blue";
+        this.ctx.lineWidth = 2;
         this.ctx.strokeRect(x, y, w, h)
     }
 
