@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2019.
  * Developed by Adam Hodgkinson
- * Last modified 21/12/12 16:12
+ * Last modified 21/12/12 16:43
  *
  * Everything on this page, and other pages on the website, is subject to the copyright of Adam Hodgkinson, it may be freely used, copied, distributed and/or modified, however, full credit must be given
  * to me and any derived works should be released under the same license. I am not held liable for any claim, this software is provided as-is and without any warranty.
@@ -11,17 +11,17 @@
  *     Photonstorm's phaser.js
  */
 
-//TODO switch modes
-//TODO delete blocks
 //TODO view coords
-//TODO export levels to json/make playable
+//TODO allow play testing
+//TODO add config options
+//TODO add win box
 
 var APP;
 
 class App {
 
     constructor() {
-        this.level = new Level();
+        this.level = new Level(900, 600);
         this.preload();
         this.create();
         this.mode = "draw";
@@ -47,8 +47,9 @@ class App {
         this.ctx.clearRect(0, 0, APP.cvs.width, APP.cvs.height);
         for (let i = 0; i < this.level.blocks.length; i++) {
             let b = this.level.blocks[i];
-            this.ctx.lineWidth = 1;
-            if (i == this.selected) this.ctx.lineWidth = 4;
+            this.ctx.lineWidth = 2; // border to see blocks
+            if (i == this.selected) this.ctx.lineWidth = 4; // selected block border
+
             this.drawBlock(b.x, b.y, b.width, b.height);
         }
         this.ctx.fillStyle = "black";
@@ -59,12 +60,20 @@ class App {
     drawBlock(x, y, w, h) {
         this.ctx.fillStyle = "black";
         this.ctx.fillRect(x, y, w, h);
-        this.ctx.strokeStyle = "#50ffeb";
+        this.ctx.strokeStyle = "rgba(80, 255, 235, 0.5)";
         this.ctx.strokeRect(x, y, w, h)
     }
 
     handleKeyDown(e) {
+        let key = e.code;
+        console.log(key);
 
+        switch (key) {
+            case "Delete":
+                APP.level.blocks.splice(APP.selected, 1);
+                APP.selected = null;
+                APP.update();
+        }
     }
 
     handleMouseDown(e) {
@@ -125,11 +134,59 @@ class Level {
         this.width = w || 900; // default
         this.height = h || 600; //
         this.blocks = [];
-
+        this.startX = 100;
+        this.startY = 400;
     }
 
     add(x, y, w, h) {
         this.blocks.push({x: x, y: y, width: w, height: h});
+    }
+
+    exportAsJSONString() {
+        let obj = [];
+        // config
+        obj.push({
+            "config": true,
+            "timeLimit": 60,
+            "startX": this.startX,
+            "startY": this.startY
+        });
+        obj.push({ // left side
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": this.height,
+            "color": "black"
+        });
+        obj.push({ // floor
+            "x": 0,
+            "y": 600,
+            "width": this.width,
+            "height": 0,
+            "color": "black",
+            "deadly": true
+        });
+        obj.push({
+            "x": this.width,
+            "y": 0,
+            "width": 0,
+            "height": this.height,
+            "color": "black"
+        });
+        obj.push({
+            "x": 0,
+            "y": 0,
+            "width": this.width,
+            "height": 0,
+            "color": "black"
+        });
+
+        for (let i = 0; i < this.blocks.length; i++) {
+            this.blocks[i].color = "black";
+            obj.push(this.blocks[i]);
+        }
+
+        return JSON.stringify(obj);
     }
 }
 
