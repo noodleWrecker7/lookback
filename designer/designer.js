@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2019.
  * Developed by Adam Hodgkinson
- * Last modified 21/12/12 9:53
+ * Last modified 21/12/12 9:54
  *
  * Everything on this page, and other pages on the website, is subject to the copyright of Adam Hodgkinson, it may be freely used, copied, distributed and/or modified, however, full credit must be given
  * to me and any derived works should be released under the same license. I am not held liable for any claim, this software is provided as-is and without any warranty.
@@ -49,8 +49,8 @@ class App {
         this.ctx.fillStyle = "black";
         this.ctx.fillRect(x, y, w, h);
         this.ctx.strokeStyle = "blue";
-        this.ctx.lineWidth = 2;
-        this.ctx.strokeRect(x, y, w, h)
+        this.ctx.lineWidth = 3;
+        this.ctx.strokeRect(x - 1, y - 1, w + 2, h + 2)
     }
 
     handleMouseDown(e) {
