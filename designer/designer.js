@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2019.
  * Developed by Adam Hodgkinson
- * Last modified 21/12/12 9:55
+ * Last modified 21/12/12 10:2
  *
  * Everything on this page, and other pages on the website, is subject to the copyright of Adam Hodgkinson, it may be freely used, copied, distributed and/or modified, however, full credit must be given
  * to me and any derived works should be released under the same license. I am not held liable for any claim, this software is provided as-is and without any warranty.
@@ -48,9 +48,9 @@ class App {
     drawBlock(x, y, w, h) {
         this.ctx.fillStyle = "black";
         this.ctx.fillRect(x, y, w, h);
-        this.ctx.strokeStyle = "#0fff0f";
-        this.ctx.lineWidth = 5;
-        this.ctx.strokeRect(x - 1, y - 1, w + 2, h + 2)
+        this.ctx.strokeStyle = "#50ffeb";
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeRect(x, y, w, h)
     }
 
     handleMouseDown(e) {
@@ -67,8 +67,8 @@ class App {
         if (APP.mode == "draw" && APP.drawFirstPos) {
             APP.drawSecondPos = pos;
             APP.level.add(APP.drawFirstPos.x, APP.drawFirstPos.y, pos.x - APP.drawFirstPos.x, pos.y - APP.drawFirstPos.y);
-            console.log("BLOCK ADDED")
             APP.drawFirstPos = null;
+            APP.update();
         }
     }
 
